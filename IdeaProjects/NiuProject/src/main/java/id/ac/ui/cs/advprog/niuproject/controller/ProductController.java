@@ -51,7 +51,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id")
-    public String deleteProduct(@PathVariable("id") String productId, Model model) {
+    public String deleteProductPage(@PathVariable("id") String productId, Model model) {
         Product product = service.findById(productId);
         if (product != null) {
             service.delete(product);
