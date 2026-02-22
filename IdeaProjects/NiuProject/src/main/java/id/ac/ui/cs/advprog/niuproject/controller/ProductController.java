@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.niuproject.controller;
 
 import id.ac.ui.cs.advprog.niuproject.model.Product;
 import id.ac.ui.cs.advprog.niuproject.service.ProductService;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,5 +35,27 @@ public class ProductController {
         List<Product> allProducts = service.findAll();
         model.addAttribute("products", allProducts);
         return "productList";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editProductPage(@PathVariable("id") String productId, Model model) {
+        Product product = service.findById(productId);
+        model.addAttribute("product", product);
+        return "editProduct";
+    }
+
+    @PostMapping("/edit")
+    public String editProductPost(@ModelAttribute Product product, Model model) {
+        service.edit(product);
+        return "redirect:/product/list";
+    }
+
+    @DeleteMapping("/delete/{id")
+    public String deleteProduct(@PathVariable("id") String productId, Model model) {
+        Product product = service.findById(productId);
+        if (product != null) {
+            service.delete(product);
+        }
+        return "redirect:/product/list";
     }
 }
